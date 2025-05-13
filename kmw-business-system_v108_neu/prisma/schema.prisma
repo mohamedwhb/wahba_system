@@ -9,22 +9,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Import existing models
-import "./models/user.prisma"
-import "./models/company.prisma"
-import "./models/bank.prisma"
-import "./models/offer.prisma"
-import "./models/customer.prisma"
-import "./models/delivery.prisma"
-import "./models/product.prisma"
-import "./models/payment.prisma"
-import "./models/license.prisma"
-import "./models/invoice.prisma"
-import "./models/integration.prisma"
-import "./models/document.prisma"
-import "./models/dashboard.prisma"
-import "./models/backup.prisma"
-
 enum EmployeeStatus {
   active
   inactive
@@ -167,4 +151,53 @@ model PasswordPolicy {
   expiryInDays     Int      @default(90) @map("expiry_in_days")
   createdAt        DateTime @default(now()) @map("created_at")
   updatedAt        DateTime @updatedAt @map("updated_at")
+}
+
+model Company {
+  id                 String   @id @default(uuid())
+  name               String
+  logo               String?
+  legalForm          String?  @map("legal_form")
+  registrationNumber String?  @map("registration_number")
+  vatId              String?  @map("vat_id")
+  taxId              String?  @map("tax_id")
+  email              String
+  phone              String
+  website            String?
+  fax                String?
+  street             String
+  number             String?
+  zip                String
+  city               String
+  country            String?  @default("Österreich")
+  foundingYear       String?  @map("founding_year")
+  employees          String?
+  industry           String?
+  notes              String?
+  createdAt          DateTime @default(now()) @map("created_at")
+  updatedAt          DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  bankDetails   BankDetails @relation(fields: [bankDetailsId], references: [id])
+  bankDetailsId String      @unique
+
+  @@index([name], name: "idx_company_name")
+  @@index([vatId], name: "idx_company_vat_id")
+  @@map("companies")
+}
+
+model BankDetails {
+  id            String   @id @default(uuid())
+  bankName      String   @map("bank_name")
+  iban          String
+  bic           String
+  accountHolder String   @map("account_holder")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  company Company?
+
+  @@index([iban], name: "idx_bank_iban")
+  @@map("bank_details")
 }
