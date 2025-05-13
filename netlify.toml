@@ -1,0 +1,12 @@
+[build]
+  base = "kmw-business-system_v108_neu"
+  command = "pnpm install && pnpm build"
+  publish = "kmw-business-system_v108_neu/.next"
+
+[build.environment]
+  NEXT_TELEMETRY_DISABLED = "1"
+  NODE_VERSION = "20"
+  PNPM_VERSION = "10.8.0"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs" 
