@@ -6,17 +6,10 @@ const prisma = new PrismaClient();
 async function main() {
   // Create admin role
   const adminRole = await prisma.role.upsert({
-    where: { key: 'ADMIN' },
+    where: { key: 'admin' },
     update: {},
     create: {
-      key: 'ADMIN',
-      name: 'Administrator',
-      description: 'System Administrator with full access',
-      rolePermissions: {
-        create: [
-          { key: 'ALL' }
-        ]
-      }
+      key: 'admin',
     },
   });
 
@@ -28,16 +21,17 @@ async function main() {
     create: {
       email: 'admin@kmw-business.de',
       username: 'admin',
-      name: 'System Administrator',
+      name: 'Admin',
       password: hashedPassword,
       roleId: adminRole.id,
-      isActive: true,
+      active: true,
     },
   });
 
   console.log('Database has been seeded. 🌱');
   console.log('Admin credentials:');
-  console.log('Username: admin');
+  console.log('Email:', adminUser.email);
+  console.log('Username:', adminUser.username);
   console.log('Password: Admin123!');
 }
 
