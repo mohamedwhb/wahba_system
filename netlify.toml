@@ -1,7 +1,7 @@
 [build]
   base = "kmw-business-system_v108_neu"
   command = "pnpm install && pnpm build"
-  publish = "kmw-business-system_v108_neu/.next"
+  publish = ".next"
 
 [build.environment]
   NEXT_TELEMETRY_DISABLED = "1"
