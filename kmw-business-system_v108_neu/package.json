@@ -10,7 +10,7 @@
 		"postinstall": "prisma generate"
 	},
 	"prisma": {
-		"schema": "./prisma",
+		"schema": "./prisma"
 	},
 	"dependencies": {
 		"@dnd-kit/core": "latest",
